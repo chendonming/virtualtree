@@ -1,0 +1,23 @@
+{
+  "id": "3522311",
+  "name": "虚拟树 VirtualTree",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "Vue 虚拟树组件",
+  "glyphs": [
+    {
+      "icon_id": "10635084",
+      "name": "复选框",
+      "font_class": "checkbox",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "10635085",
+      "name": "复选框-已选",
+      "font_class": "checkbox-checked",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    }
+  ]
+}

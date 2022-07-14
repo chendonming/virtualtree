@@ -1,5 +1,5 @@
 <template>
-  <div class="virtual-tree-item">
+  <div class="virtual-tree-item" @scroll="scrollEvent($event)">
     <div
       class="infinite-list-phantom"
       :style="{ height: listHeight + 'px' }"
@@ -9,7 +9,7 @@
         ref="items"
         class="infinite-list-item e-treeitem"
         v-for="root in visibleData"
-        :key="root.Id"
+        :key="root.id"
         :style="{ height: itemSize + 'px', lineHeight: itemSize + 'px' }"
       >
         <div
@@ -31,17 +31,16 @@
             <e-checkbox
               :style="{ visibility: root.isCheckbox ? 'hidden' : 'visible' }"
               v-model="root.checked"
-              @change="handleChecked(root, $event)"
               :indeterminate="root.indeterminate"
             ></e-checkbox>
           </span>
           <span
             @click="handleNodeClick(root)"
-            :title="root.DisplayName"
-            :class="{ active: active === root.Id }"
+            :title="root.text"
+            :class="{ active: active === root.id }"
             class="treeitem_content_label"
           >
-            {{ root.DisplayName }}
+            {{ root.text }}
           </span>
         </div>
       </div>
@@ -50,10 +49,16 @@
 </template>
 
 <script>
+import ECheckbox from "./CheckBox.vue";
+
 export default {
   name: "VirtualTreeItem",
+  components: { ECheckbox },
   props: {
-    data: Array,
+    data: {
+      type: Array,
+      default: () => [],
+    },
 
     itemSize: {
       type: Number,
@@ -90,6 +95,12 @@ export default {
     };
   },
 
+  mounted() {
+    this.screenHeight = this.$el.clientHeight;
+    this.start = 0;
+    this.end = this.start + this.visibleCount;
+  },
+
   computed: {
     visibleCount() {
       return Math.ceil(this.screenHeight / this.itemSize);
@@ -104,10 +115,7 @@ export default {
     },
 
     visibleData() {
-      return this.data.slice(
-        this.start,
-        Math.min(this.end, this.listData.length)
-      );
+      return this.data.slice(this.start, Math.min(this.end, this.data.length));
     },
   },
 
@@ -119,20 +127,43 @@ export default {
       this.startOffset = scrollTop - (scrollTop % this.itemSize);
     },
 
-    handleNodeClick() {
+    handleNodeClick() {},
 
-    },
+    handleChecked() {},
 
-    handleChecked() {
-
-    },
-
-    handleExpandIconClick() {
-
-    }
+    handleExpandIconClick() {},
   },
 };
 </script>
 
 <style scoped>
+.virtual-tree-item {
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+.infinite-list-phantom {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.infinite-list {
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
+  text-align: center;
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+}
+
+.infinite-list-item {
+  color: #555;
+  box-sizing: border-box;
+}
 </style>
