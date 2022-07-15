@@ -14,41 +14,62 @@ class Store {
     this.transformData(this.data, 0);
   }
 
+  uuid() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
+  }
+
   transformData(data, n, parent, parentName) {
-    let level = n || 0
-    level++
+    let level = n || 0;
+    level++;
     if (data.length > 0) {
-      data.forEach(item => {
-        item.parent = parent
-        item.parentName = parentName ? (parentName + ' > ' + item[this.props.label]) : item[this.props.label]
-        this.map[item.Id] = item
-        item.data = JSON.parse(JSON.stringify(item))
+      data.forEach((item) => {
+        item.Id = this.uuid();
+        item.parent = parent;
+        item.parentName = parentName
+          ? parentName + " > " + item[this.props.label]
+          : item[this.props.label];
+        this.map[item.Id] = item;
+        item.data = JSON.parse(JSON.stringify(item));
         item.checked = item[this.props.checked]
           ? item[this.props.checked]
-          : true
-        item.expanded = item.expanded ? item.expanded : false
+          : true;
+        item.expanded = item.expanded ? item.expanded : false;
         item.indeterminate =
-          typeof item.indeterminate === 'undefined' ? false : item.indeterminate
+          typeof item.indeterminate === "undefined"
+            ? false
+            : item.indeterminate;
         item.isCheckbox = item[this.props.isCheckbox]
           ? item[this.props.isCheckbox]
-          : false
-        item.visible = true
-        item.level = level
-        item.text = item[this.props.label]
-        item.load = false
-        item.loadStatus = false
+          : false;
+        item.visible = true;
+        item.level = level;
+        item.text = item[this.props.label];
+        item.load = false;
+        item.loadStatus = false;
         item.hasChildren = !!(
           item[this.props.children] && item[this.props.children].length > 0
-        )
+        );
 
-        if (typeof item[this.props.children] === 'undefined') {
-          item[this.props.children] = []
+        if (typeof item[this.props.children] === "undefined") {
+          item[this.props.children] = [];
         }
 
         if (item[this.props.children] && item[this.props.children].length > 0) {
-          this.transformData(item[this.props.children], level, item.Id, item.parentName || '')
+          this.transformData(
+            item[this.props.children],
+            level,
+            item.Id,
+            item.parentName || ""
+          );
         }
-      })
+      });
     }
   }
 }

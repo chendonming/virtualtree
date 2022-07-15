@@ -2,17 +2,23 @@
   <div id="app">
     <div>测试VirtualTree</div>
 
-    <virtual-tree :data="data"/>
+    <virtual-tree :data="data" />
+
+    <e-checkbox
+      v-model="checked"
+    ></e-checkbox>
   </div>
 </template>
 
 <script>
 import VirtualTree from "./components/VirtualTree.vue";
+import ECheckbox from "./components/CheckBox.vue";
 
 export default {
   name: "App",
   components: {
     VirtualTree,
+    ECheckbox,
   },
   data() {
     return {
@@ -66,6 +72,7 @@ export default {
           ],
         },
       ],
+      checked: false
     };
   },
 };

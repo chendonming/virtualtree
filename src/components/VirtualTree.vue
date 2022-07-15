@@ -1,6 +1,6 @@
 <template>
   <div class="VirtualTree">
-    <virtual-tree-item :props="props" :data="list" :itemSize="33"/>
+    <virtual-tree-item :props="props" :data.sync="list" :itemSize="33"/>
   </div>
 </template>
 

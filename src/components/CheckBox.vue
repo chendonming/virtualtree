@@ -38,11 +38,9 @@ export default {
   computed: {
     model: {
       get() {
-        console.log("get:", this.value);
         return this.value;
       },
       set(val) {
-        console.log("val:", val);
         this.$emit("input", val);
       },
     },
