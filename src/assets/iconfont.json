@@ -6,18 +6,18 @@
   "description": "Vue 虚拟树组件",
   "glyphs": [
     {
-      "icon_id": "10635084",
-      "name": "复选框",
-      "font_class": "checkbox",
-      "unicode": "e607",
-      "unicode_decimal": 58887
+      "icon_id": "8777601",
+      "name": "page_turning_right",
+      "font_class": "icon-test101",
+      "unicode": "e661",
+      "unicode_decimal": 58977
     },
     {
-      "icon_id": "10635085",
-      "name": "复选框-已选",
-      "font_class": "checkbox-checked",
-      "unicode": "e608",
-      "unicode_decimal": 58888
+      "icon_id": "8777603",
+      "name": "show_more",
+      "font_class": "icon-test12",
+      "unicode": "e664",
+      "unicode_decimal": 58980
     }
   ]
 }

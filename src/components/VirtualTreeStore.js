@@ -12,6 +12,34 @@ class Store {
   setData(data) {
     this.data = data;
     this.transformData(this.data, 0);
+    this.indexData = Object.values(this.data);
+  }
+
+  /**
+   * 更改属性值
+   */
+  setValue(id, key, value) {
+    this.map[id][key] = value;
+  }
+
+  /**
+   * 关闭id所有的子节点
+   * @param id
+   */
+  closeAllChildren(id) {
+    const node = this.map[id];
+    const children = this.props.children;
+    const eventDown = (arr) => {
+      arr.forEach((row) => {
+        row.expanded = false;
+        row.childrenCount = 0;
+
+        if (row[children] && row[children].length > 0) {
+          eventDown(row[children]);
+        }
+      });
+    };
+    eventDown(node[children]);
   }
 
   uuid() {
@@ -23,6 +51,29 @@ class Store {
         return v.toString(16);
       }
     );
+  }
+
+  setChildrenCount(id, count) {
+    const node = this.map[id];
+    const eventUp = (data) => {
+      if (!data.childrenCount) data.childrenCount = 0;
+      data.childrenCount += count;
+      if (data.parent) {
+        eventUp(this.map[data.parent]);
+      }
+    };
+
+    if (this.map[node.parent]) {
+      eventUp(this.map[node.parent]);
+    }
+
+    if (count > 0) {
+      node.childrenCount = count;
+    }
+
+    if (count <= 0) {
+      node.childrenCount = 0;
+    }
   }
 
   transformData(data, n, parent, parentName) {
@@ -56,6 +107,7 @@ class Store {
         item.hasChildren = !!(
           item[this.props.children] && item[this.props.children].length > 0
         );
+        item.childrenCount = 0;
 
         if (typeof item[this.props.children] === "undefined") {
           item[this.props.children] = [];

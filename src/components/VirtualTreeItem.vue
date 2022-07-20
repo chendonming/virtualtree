@@ -1,5 +1,9 @@
 <template>
-  <div class="virtual-tree-item" @scroll="scrollEvent($event)">
+  <div
+    ref="list"
+    class="virtual-tree-item pointer"
+    @scroll="scrollEvent($event)"
+  >
     <div
       class="infinite-list-phantom"
       :style="{ height: listHeight + 'px' }"
@@ -9,7 +13,7 @@
         ref="items"
         class="infinite-list-item e-treeitem"
         v-for="root in visibleData"
-        :key="root.id"
+        :key="root.Id"
         :style="{ height: itemSize + 'px', lineHeight: itemSize + 'px' }"
       >
         <div
@@ -17,20 +21,23 @@
           :style="{ 'padding-left': (root.level - 1) * indent + 'px' }"
         >
           <span
-            class="treeitem_content_icon"
+            class="treeitem_content_icon pointer"
             :class="[root.hasChildren ? '' : 'is-leaf']"
           >
             <i
               class="iconfont"
-              @click="handleExpandIconClick(root)"
-              :class="[root.expanded ? 'iconicon-test12' : 'iconicon-test101']"
+              @click="handleExpandIconClick(root, !root.expanded)"
+              :class="[
+                root.expanded ? 'icon-icon-test12' : 'icon-icon-test101',
+              ]"
             ></i>
             <i v-if="root.loadStatus" class="icon-e-loading"></i>
           </span>
           <span class="treeitem_checkbox">
             <e-checkbox
               :style="{ visibility: root.isCheckbox ? 'hidden' : 'visible' }"
-              v-model="root.checked"
+              :value="root.checked"
+              @input="handleChecked(root, $event)"
               :indeterminate="root.indeterminate"
             ></e-checkbox>
           </span>
@@ -129,9 +136,13 @@ export default {
 
     handleNodeClick() {},
 
-    handleChecked() {},
+    handleChecked(root, evt) {
+      this.$emit("checked", root, evt);
+    },
 
-    handleExpandIconClick() {},
+    handleExpandIconClick(root, evt) {
+      this.$emit("expanded", root, evt);
+    },
   },
 };
 </script>
@@ -160,6 +171,14 @@ export default {
   text-align: center;
   -webkit-backface-visibility: hidden;
   -webkit-perspective: 1000;
+}
+
+.e-treeitem_content {
+  text-align: left;
+}
+
+.treeitem_content_icon.is-leaf {
+  visibility: hidden;
 }
 
 .infinite-list-item {

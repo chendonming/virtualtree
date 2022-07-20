@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3522311 */
-  src: url('iconfont.woff2?t=1657783450199') format('woff2'),
-       url('iconfont.woff?t=1657783450199') format('woff'),
-       url('iconfont.ttf?t=1657783450199') format('truetype');
+  src: url('iconfont.woff2?t=1658310531772') format('woff2'),
+       url('iconfont.woff?t=1658310531772') format('woff'),
+       url('iconfont.ttf?t=1658310531772') format('truetype');
 }
 
 .iconfont {
@@ -13,11 +13,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-checkbox:before {
-  content: "\e607";
+.icon-icon-test101:before {
+  content: "\e661";
 }
 
-.icon-checkbox-checked:before {
-  content: "\e608";
+.icon-icon-test12:before {
+  content: "\e664";
 }
 
