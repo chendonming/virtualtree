@@ -13,7 +13,7 @@
         ref="items"
         class="infinite-list-item e-treeitem"
         v-for="root in visibleData"
-        :key="root.Id"
+        :key="root[props.key]"
         :style="{ height: itemSize + 'px', lineHeight: itemSize + 'px' }"
       >
         <div
@@ -44,7 +44,10 @@
           <span
             @click="handleNodeClick(root)"
             :title="root.text"
-            :class="{ active: active === root.id }"
+            :class="{
+              active: active === root[props.key],
+              disabled: root[props.disabled],
+            }"
             class="treeitem_content_label"
           >
             {{ root.text }}
@@ -87,6 +90,7 @@ export default {
           label: "label",
           disabled: "disabled",
           checked: "checked",
+          key: "uuid",
         };
       },
     },
@@ -134,7 +138,12 @@ export default {
       this.startOffset = scrollTop - (scrollTop % this.itemSize);
     },
 
-    handleNodeClick() {},
+    handleNodeClick(root) {
+      if (root[this.props.disabled]) {
+        return;
+      }
+      this.$emit("node-click", root);
+    },
 
     handleChecked(root, evt) {
       this.$emit("checked", root, evt);
@@ -175,6 +184,11 @@ export default {
 
 .e-treeitem_content {
   text-align: left;
+}
+
+.treeitem_content_label.disabled {
+  color: #bcb9b9;
+  cursor: not-allowed;
 }
 
 .treeitem_content_icon.is-leaf {

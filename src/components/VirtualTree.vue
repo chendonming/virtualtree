@@ -3,6 +3,7 @@
     <virtual-tree-item
       @checked="handleChecked"
       @expanded="handleExpanded"
+      @node-click="handleNodeClick"
       :props="props"
       :data="list"
       :itemSize="22"
@@ -32,6 +33,7 @@ export default {
           label: "label",
           disabled: "disabled",
           checked: "checked",
+          key: "uuid"
         };
       },
     },
@@ -65,27 +67,28 @@ export default {
     },
 
     handleChecked(obj, e) {
-      this.store.setValue(obj.Id, "checked", e);
+      this.store.setValue(obj[this.props.key], "checked", e);
     },
     handleExpanded(root, e) {
-      this.store.setValue(root.Id, "expanded", e);
-      const index = this.list.findIndex((v) => v.Id === root.Id);
+      this.store.setValue(root[this.props.key], "expanded", e);
+      const index = this.list.findIndex((v) => v[this.props.key] === root[this.props.key]);
       // 向下展开
       if (e) {
-        root.children.forEach((row, i) => {
+        root[this.props.children].forEach((row, i) => {
           this.list.splice(index + i + 1, 0, row);
         });
 
-        this.store.setChildrenCount(root.Id, root.children.length);
+        this.store.setChildrenCount(root[this.props.key], root[this.props.children].length);
       } else {
-        const length = root.childrenCount;
+        const length = root.childrenCount
         this.list.splice(index + 1, length);
-        this.store.setChildrenCount(root.Id, -root.children.length);
+        this.store.setChildrenCount(root[this.props.key], -root[this.props.children].length);
         // 子节点全部关闭
-        this.store.closeAllChildren(root.Id);
+        this.store.closeAllChildren(root[this.props.key]);
       }
-
-      console.log("list: ", this.list);
+    },
+    handleNodeClick(root) {
+      this.$emit("node-click", root);
     },
   },
 };
@@ -94,5 +97,6 @@ export default {
 <style scoped>
 .VirtualTree {
   font-size: 14px;
+  user-select: none;
 }
 </style>

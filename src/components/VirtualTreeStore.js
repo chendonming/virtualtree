@@ -81,14 +81,14 @@ class Store {
     level++;
     if (data.length > 0) {
       data.forEach((item) => {
-        item.Id = this.uuid();
+        item[this.props.key] = item[this.props.key] || this.uuid();
         item.parent = parent;
         item.parentName = parentName
           ? parentName + " > " + item[this.props.label]
           : item[this.props.label];
-        this.map[item.Id] = item;
+        this.map[item[this.props.key]] = item;
         item.data = JSON.parse(JSON.stringify(item));
-        item.checked = item[this.props.checked]
+        item.checked = typeof item[this.props.checked] !== 'undefined'
           ? item[this.props.checked]
           : true;
         item.expanded = item.expanded ? item.expanded : false;
@@ -117,7 +117,7 @@ class Store {
           this.transformData(
             item[this.props.children],
             level,
-            item.Id,
+            item[this.props.key],
             item.parentName || ""
           );
         }
