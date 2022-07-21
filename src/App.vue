@@ -12,7 +12,12 @@
       :data="data"
       :props="props"
       @node-click="handleNodeClick"
-    />
+      @checked="handleChecked"
+    >
+      <template #default="{ text, parentName }">
+        <div class="test-slot">{{ text }} {{ parentName }}</div>
+      </template>
+    </virtual-tree>
 
     <e-checkbox v-model="checked"></e-checkbox>
   </div>
@@ -33,9 +38,7 @@ export default {
       props: {
         children: "TestChildren",
         label: "Label",
-        disabled: "disabled",
-        checked: "checked",
-        key: "uuid"
+        key: "uuid",
       },
       data: [
         {
@@ -21716,11 +21719,20 @@ export default {
   },
   methods: {
     handleNodeClick(root) {
-      console.log('节点被点击: ', root)
-    }
-  }
+      console.log("节点被点击: ", root);
+    },
+
+    handleChecked(arr, e) {
+      console.log("受影响的id节点: ", arr, "  节点勾选与否: ", e);
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style>
+.test-slot {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 </style>

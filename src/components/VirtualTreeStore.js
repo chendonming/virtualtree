@@ -42,6 +42,82 @@ class Store {
     eventDown(node[children]);
   }
 
+  /**
+   * 通过id获取被勾选的子节点数量
+   */
+  getCheckedChildrenById(id) {
+    const n = this.map[id][this.props.children];
+    return n.filter((v) => v.checked);
+  }
+
+  /**
+   * 勾选节点
+   * @param ids
+   * @param bool
+   * @returns 参与勾选的节点id
+   */
+  setCheckedByKey(ids, bool) {
+    const arrid = ids.map((v) => this.map[v]);
+    ids.forEach((id) => {
+      const node = this.map[id];
+      const children = this.props.children;
+      // 模拟事件循环向下
+      const eventDown = (arr) => {
+        arr.forEach((row) => {
+          arrid.push(row);
+          row.checked = bool;
+          if (!bool) {
+            row.indeterminate = false;
+          }
+
+          if (row[children] && row[children].length > 0) {
+            eventDown(row[children]);
+          }
+        });
+      };
+
+      // 模拟事件循环向上
+      const eventUp = (data, indeterminate) => {
+        const children = data[this.props.children].length;
+        const checkedArr = this.getCheckedChildrenById(
+          data[this.props.key]
+        ).length;
+        if (checkedArr === 0 && children === 0) {
+          data.checked = bool;
+        }
+
+        if (checkedArr === 0 && children !== 0) {
+          data.checked = false;
+        }
+
+        if (children === checkedArr && checkedArr !== 0) {
+          data.checked = true;
+        }
+
+        if (indeterminate) {
+          data.indeterminate = true;
+          data.checked = false;
+        } else {
+          if (checkedArr > 0 && checkedArr < children) {
+            data.indeterminate = true;
+            data.checked = false;
+          } else {
+            data.indeterminate = false;
+          }
+        }
+
+        if (data.parent) {
+          eventUp(this.map[data.parent], data.indeterminate || indeterminate);
+        }
+      };
+
+      eventDown(node[children]);
+      eventUp(node);
+    });
+
+    return arrid;
+  }
+
   uuid() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
       /[xy]/g,
@@ -88,9 +164,10 @@ class Store {
           : item[this.props.label];
         this.map[item[this.props.key]] = item;
         item.data = JSON.parse(JSON.stringify(item));
-        item.checked = typeof item[this.props.checked] !== 'undefined'
-          ? item[this.props.checked]
-          : true;
+        item.checked =
+          typeof item[this.props.checked] !== "undefined"
+            ? item[this.props.checked]
+            : true;
         item.expanded = item.expanded ? item.expanded : false;
         item.indeterminate =
           typeof item.indeterminate === "undefined"

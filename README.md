@@ -1,24 +1,10 @@
-# virtualtree
+## 虚拟树
 
-## Project setup
-```
-yarn install
-```
+> 此组件为Vue2.x开发,  Vue3.x正在开发中
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+### 介绍
 
-### Compiles and minifies for production
-```
-yarn build
-```
+虚拟列表其实是按需显示的一种实现，即只对可见区域进行渲染，
+对非可见区域中的数据不渲染或部分渲染的技术，从而达到极高的渲染性能。
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+经过WebGl数万条构件洗礼摧残依然屹立不倒, 值得信赖.

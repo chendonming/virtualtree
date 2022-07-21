@@ -41,17 +41,19 @@
               :indeterminate="root.indeterminate"
             ></e-checkbox>
           </span>
-          <span
+          <div
             @click="handleNodeClick(root)"
             :title="root.text"
             :class="{
               active: active === root[props.key],
-              disabled: root[props.disabled],
+              disabled: root.disabled,
             }"
             class="treeitem_content_label"
           >
-            {{ root.text }}
-          </span>
+            <slot v-bind="root">
+              {{ root.text }}
+            </slot>
+          </div>
         </div>
       </div>
     </div>
@@ -88,8 +90,6 @@ export default {
         return {
           children: "children",
           label: "label",
-          disabled: "disabled",
-          checked: "checked",
           key: "uuid",
         };
       },
@@ -142,6 +142,7 @@ export default {
       if (root[this.props.disabled]) {
         return;
       }
+      this.active = root[this.props.key];
       this.$emit("node-click", root);
     },
 
@@ -182,8 +183,15 @@ export default {
   -webkit-perspective: 1000;
 }
 
+.treeitem_content_label {
+  flex: 1;
+  width: 0;
+}
+
 .e-treeitem_content {
   text-align: left;
+  display: flex;
+  align-items: center;
 }
 
 .treeitem_content_label.disabled {

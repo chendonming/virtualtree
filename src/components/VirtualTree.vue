@@ -7,7 +7,11 @@
       :props="props"
       :data="list"
       :itemSize="22"
-    />
+    >
+      <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope"
+        ><slot :name="slot" v-bind="scope"
+      /></template>
+    </virtual-tree-item>
   </div>
 </template>
 
@@ -31,9 +35,7 @@ export default {
         return {
           children: "children",
           label: "label",
-          disabled: "disabled",
-          checked: "checked",
-          key: "uuid"
+          key: "uuid",
         };
       },
     },
@@ -67,22 +69,31 @@ export default {
     },
 
     handleChecked(obj, e) {
-      this.store.setValue(obj[this.props.key], "checked", e);
+      const arr = this.store.setCheckedByKey([obj[this.props.key]], e);
+      this.$emit("checked", arr, e);
     },
     handleExpanded(root, e) {
       this.store.setValue(root[this.props.key], "expanded", e);
-      const index = this.list.findIndex((v) => v[this.props.key] === root[this.props.key]);
+      const index = this.list.findIndex(
+        (v) => v[this.props.key] === root[this.props.key]
+      );
       // 向下展开
       if (e) {
         root[this.props.children].forEach((row, i) => {
           this.list.splice(index + i + 1, 0, row);
         });
 
-        this.store.setChildrenCount(root[this.props.key], root[this.props.children].length);
+        this.store.setChildrenCount(
+          root[this.props.key],
+          root[this.props.children].length
+        );
       } else {
-        const length = root.childrenCount
+        const length = root.childrenCount;
         this.list.splice(index + 1, length);
-        this.store.setChildrenCount(root[this.props.key], -root[this.props.children].length);
+        this.store.setChildrenCount(
+          root[this.props.key],
+          -root[this.props.children].length
+        );
         // 子节点全部关闭
         this.store.closeAllChildren(root[this.props.key]);
       }
