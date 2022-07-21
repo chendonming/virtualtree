@@ -2,6 +2,8 @@
 
 > 此组件为Vue2.x开发,  Vue3.x正在开发中
 
+You don't speak Chinese? <a href="https://github.com/chendonming/virtualtree/blob/master/README.en.md">Click to view the English version</a>
+
 ### 介绍
 
 虚拟列表其实是按需显示的一种实现，即只对可见区域进行渲染，
