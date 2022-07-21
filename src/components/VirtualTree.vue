@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import "@/assets/main.css";
+import "@/assets/iconfont.css";
 import VirtualTreeItem from "./VirtualTreeItem.vue";
 import { Store } from "./VirtualTreeStore";
 import cloneDeep from "lodash/cloneDeep";
@@ -104,6 +106,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .VirtualTree {

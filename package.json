@@ -1,6 +1,6 @@
 {
   "name": "virtualtree-vue2",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "author": "chendm",
   "main": "lib/virtualtree-vue2.common.js",
   "scripts": {
