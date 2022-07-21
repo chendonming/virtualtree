@@ -57,7 +57,7 @@ When you click on the corresponding node, an `active` className will be added, a
 }
 ````
 
-##API
+## API
 
 ### handleChecked(obj, bool)
 Check a piece of data, it will be automatically checked
