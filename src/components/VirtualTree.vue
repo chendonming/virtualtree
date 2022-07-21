@@ -18,7 +18,7 @@
 <script>
 import VirtualTreeItem from "./VirtualTreeItem.vue";
 import { Store } from "./VirtualTreeStore";
-import _ from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 
 export default {
   components: { VirtualTreeItem },
@@ -60,7 +60,7 @@ export default {
   methods: {
     computedData() {
       const store = new Store({
-        data: _.cloneDeep(this.data),
+        data: cloneDeep(this.data),
         props: this.props,
       });
 

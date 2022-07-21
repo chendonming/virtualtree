@@ -1,12 +1,13 @@
 {
-  "name": "virtualtree",
-  "version": "0.1.0",
+  "name": "virtualtree-vue2",
+  "version": "0.1.1",
   "author": "chendm",
-  "private": true,
+  "main": "lib/virtualtree-vue2.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --dest lib src/components/index.js"
   },
   "dependencies": {
     "core-js": "^3.8.3",
