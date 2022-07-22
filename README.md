@@ -2,8 +2,6 @@
 
 > 此组件为Vue2.x开发,  Vue3.x正在开发中
 
-> 开源不易 如果对你有一点帮助 点个免费的start吧 这将是我更新维护的全部动力
-
 You don't speak Chinese? <a href="https://github.com/chendonming/virtualtree/blob/master/README.en.md">Click to view the English version</a>
 
 ### 介绍
