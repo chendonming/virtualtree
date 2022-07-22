@@ -37,6 +37,7 @@
             <e-checkbox
               :style="{ visibility: root.isCheckbox ? 'hidden' : 'visible' }"
               :value="root.checked"
+              :disabled="root.disabled"
               @input="handleChecked(root, $event)"
               :indeterminate="root.indeterminate"
             ></e-checkbox>
