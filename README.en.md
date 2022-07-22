@@ -2,6 +2,7 @@
 
 > This component is developed for Vue2.x, Vue3.x is under development
 
+> Open source is not easy. If it helps you a little, click on a free start. This will be the whole motivation for me to update and maintain.
 ### introduce
 
 The virtual list is actually an implementation of on-demand display, that is, only the visible area is rendered.
