@@ -132,6 +132,15 @@ export default {
   },
 
   methods: {
+    focusingByCount(id) {
+      this.$nextTick(() => {
+        const count = this.data.findIndex((v) => v[this.props.key] === id);
+        this.$refs.list.scrollTop =
+          (count - Math.ceil(this.visibleCount / 2)) * this.itemSize;
+        this.active = id;
+      });
+    },
+
     scrollEvent() {
       let scrollTop = this.$refs.list.scrollTop;
       this.start = Math.floor(scrollTop / this.itemSize);
@@ -164,6 +173,7 @@ export default {
   overflow: auto;
   position: relative;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 .infinite-list-phantom {

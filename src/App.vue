@@ -13,12 +13,14 @@
       :props="props"
       @node-click="handleNodeClick"
       @checked="handleChecked"
+      ref="tree"
     >
       <template #default="{ text, parentName }">
         <div class="test-slot">{{ text }} {{ parentName }}</div>
       </template>
     </virtual-tree>
 
+    <button @click="highlightNode">聚焦到</button>
     <e-checkbox v-model="checked"></e-checkbox>
   </div>
 </template>
@@ -21724,6 +21726,10 @@ export default {
 
     handleChecked(arr, e) {
       console.log("受影响的id节点: ", arr, "  节点勾选与否: ", e);
+    },
+
+    highlightNode() {
+      this.$refs.tree.highlightNode("02.5a28a282e2e06c3f.603153");
     },
   },
 };

@@ -152,12 +152,17 @@ class Store {
     }
   }
 
-  transformData(data, n, parent, parentName) {
+  transformData(data, n, parent, parentName, parentIds) {
     let level = n || 0;
     level++;
     if (data.length > 0) {
       data.forEach((item) => {
         item[this.props.key] = item[this.props.key] || this.uuid();
+        if (!item.parentIds) {
+          item.parentIds = []
+        }
+        if (parent)
+          item.parentIds = [...parentIds, parent]
         item.parent = parent;
         item.parentName = parentName
           ? parentName + " > " + item[this.props.label]
@@ -195,7 +200,8 @@ class Store {
             item[this.props.children],
             level,
             item[this.props.key],
-            item.parentName || ""
+            item.parentName || "",
+            item.parentIds
           );
         }
       });
