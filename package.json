@@ -1,10 +1,11 @@
 {
   "name": "virtualtree-vue2",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "chendm",
   "main": "lib/virtualtree-vue2.common.js",
   "homepage": "https://github.com/chendonming/virtualtree",
   "description": "A high-performance virtual tree component",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/chendonming/virtualtree.git"
