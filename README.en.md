@@ -29,6 +29,20 @@ Vue.use(VirtualTree);
   ref="tree"
 >
 </virtual-tree>
+
+<script>
+  export default {
+    data() {
+      return {
+         props: {
+            children: "TestChildren",
+            label: "Label",
+            key: "uuid",
+          },
+      }
+    }
+  }
+</script>
 ````
 
 Because the virtual tree needs to determine the area by scrolling the viewport, the DOM occupied by `virtual-tree` must have a height when initialized, and this height can be set by the parent.

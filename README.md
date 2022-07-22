@@ -32,6 +32,20 @@ Vue.use(VirtualTree);
   ref="tree"
 >
 </virtual-tree>
+
+<script>
+  export default {
+    data() {
+      return {
+         props: {
+            children: "TestChildren",
+            label: "Label",
+            key: "uuid",
+          },
+      }
+    }
+  }
+</script>
 ```
 
 因为虚拟树需要通过滚动视口确定区域, 所以初始化时`virtual-tree`所占的DOM必须有高度, 这个高度可以是由父级设置的.
