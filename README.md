@@ -1,6 +1,6 @@
 ## 虚拟树
 
-> 此组件为Vue2.x开发,  Vue3.x正在开发中
+> 此组件为Vue2.x开发
 
 You don't speak Chinese? <a href="https://github.com/chendonming/virtualtree/blob/master/README.en.md">Click to view the English version</a>
 
